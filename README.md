@@ -1,7 +1,8 @@
 ## A simple raspberry pi backlight brightness cli adjuster
 
 Designed and tested for raspberry pi with official 7 inch touchdcreen. <br>
-
+<br>
+If you prefer a perl script, check out my other repo: https://github.com/WestleyK/pi-backlight <br>
 <br>
 
 ## Install and uninstall
