@@ -1,7 +1,7 @@
 // Created by: Westley K
 // Date: Jul 17, 2018
-// https://github.com/WestleyR/pi-backlight-c
-// Version-1.0-beta-1
+// https://github.com/WestleyK/rpi-brightness
+// Version-1.0-beta-3
 //
 // Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 //
@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 
-#define VERSION "1.0-beta-1"
+#define VERSION "1.0-beta-3"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
 #define BACKLIGHT_POWER "/sys/class/backlight/rpi_backlight/bl_power"
@@ -28,11 +28,11 @@ char BRIGHTNESS_IN[20];
 
 
 void usage() {
-	printf("Usage: <COMMAND> [OPTION]\n");
+	printf("Usage: rpi-backlight [OPTION]\n");
 	printf("	-h | -help | --help (print help menu)\n");
 	printf("	[15-255] (adjust brightness from 15 to 255\n");
 	printf("	-v | -version | --version (print version)\n");
-	printf("Source code: https://github.com/WestleyR/pi-backlight-c\n");
+	printf("Source code: https://github.com/WestleyK/rpi-brightness\n");
 	exit(0);
 
 }
@@ -63,16 +63,27 @@ int main(int argc, char* argv[]) {
 			ADJUST_BACKLIGHT = 1;
 		} else {
 			printf("Option not found :P\n");
-			printf("Try: <COMMAND> -help\n");
+			printf("Try: rpi-brightness -help\n");
 			return EXIT_FAILURE;
 		}
 
 		// do we need to adjust
 		if (ADJUST_BACKLIGHT == 1) {
-			// check if there a decimal
+			// check if theres a decimal, this part is not needed
 			if (strstr(argv[1], ".") != 0) {
 				printf("Only whole numbers!\n");
 				return EXIT_FAILURE;
+			}
+			// check if input contains any letter
+			char *IS_VALID = argv[1];
+			int i;
+			for (i = 0; i < strlen(IS_VALID); i++) {
+				if (IS_VALID[i] >= '0' && IS_VALID[i] <= '9') {
+					//printf("%c\n", IS_VALID[i]);
+				} else {
+					printf("Only number input!\n");
+					return EXIT_FAILURE;
+				}
 			}
 			// convert string to int
 			BRIGHTNESS = atoi(argv[1]);
@@ -85,7 +96,7 @@ int main(int argc, char* argv[]) {
 			if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
 				printf("\033[31;1m" "ERROR: " "\033[0m");
 				printf("Brightness file not writable.\n");
-				printf("Try sudo <COMMAND>  (or)  https://github.com/WestleyR/pi-backlight-c (for help)\n");
+				printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyR/pi-backlight-c (for help)\n");
 				return EXIT_FAILURE;
 			}
 
@@ -103,11 +114,27 @@ int main(int argc, char* argv[]) {
 	// if no arguments, than offer to change brightness
 	printf("[15-255]:");
 	fgets(BRIGHTNESS_IN, 20, stdin);
+	// check if theres a decimal
 	if (strstr(BRIGHTNESS_IN, ".") != 0 ) {
-		printf("Only whole number!\n");
+		printf("Only whole numbers!\n");
 		return EXIT_FAILURE;
 	}
-
+	// check if theres a comma
+	if (strstr(BRIGHTNESS_IN, ",") != 0) {
+		printf("Only whole numbers!\n");
+		return EXIT_FAILURE;
+	}
+	// check if input contains any letter
+	char *IS_VALID = BRIGHTNESS_IN;
+	int i;
+	for (i = 0; i < (strlen(IS_VALID) -1 ); i++) {
+		if (IS_VALID[i] >= '0' && IS_VALID[i] <= '9') {
+			//printf("%c\n", IS_VALID[i]);
+		} else {
+			printf("Only number input!\n");
+			return EXIT_FAILURE;
+		}
+	}
 	// again, convert string to int
 	BRIGHTNESS = atoi(BRIGHTNESS_IN);
 	// check is its within range
@@ -120,7 +147,7 @@ int main(int argc, char* argv[]) {
 	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
 		printf("\033[31;1m" "ERROR: " "\033[0m");
 		printf("Brightness file not writable.\n");
-		printf("Try sudo <COMMAND>  (or)  https://github.com/WestleyR/pi-backlight-c (for help)\n");
+		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyR/pi-backlight-c (for help)\n");
 		return EXIT_FAILURE;
 	}
 
@@ -131,9 +158,7 @@ int main(int argc, char* argv[]) {
 	fclose(BACKLIGHT_FILE);
 
 
-
-    
-    return 0;
+	return 0;
 }
 
 
