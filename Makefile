@@ -4,8 +4,5 @@ all: pi-brightness.c
 install:
 	cp rpi-brightness /usr/local/bin
 
-clean:
-	$(RM) rpi-brightness
-
 uninstall:
 	$(RM) /usr/local/bin/rpi-brightness
