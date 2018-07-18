@@ -9,6 +9,7 @@ If you prefer a perl script, check out my other repo: https://github.com/Westley
 
 ####To install: <br>
 
+
 ```
 make
 sudo make install
@@ -17,6 +18,7 @@ sudo make install
 <br>
 
 ####To update: <br>
+
 
 ```
 sudo make update
@@ -27,6 +29,7 @@ Update will re-install after updating. <br>
 <br>
 
 ####To uninstall: <br>
+
 
 ```
 sudo make uninstall
