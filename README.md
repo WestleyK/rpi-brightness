@@ -7,8 +7,7 @@ If you prefer a perl script, check out my other repo: https://github.com/Westley
 
 ## Install, Update and Uninstall
 
-To install: <br>
-
+####To install: <br>
 
 ```
 make
@@ -17,17 +16,17 @@ sudo make install
 
 <br>
 
-To update: <br>
+####To update: <br>
 
 ```
 sudo make update
 ```
 
-<br>
 Update will re-install after updating. <br>
 <br>
+<br>
 
-To uninstall: <br>
+####To uninstall: <br>
 
 ```
 sudo make uninstall
