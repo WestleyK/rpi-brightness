@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 #define DATE_MODIFIED "Jun 25, 2018"
-#define VERSION "1.0-beta-4"
+#define VERSION "1.0-beta-5"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
 #define BACKLIGHT_POWER "/sys/class/backlight/rpi_backlight/bl_power"
