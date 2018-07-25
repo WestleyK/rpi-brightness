@@ -1,7 +1,7 @@
 // Created by: Westley K
 // Date: Jul 25, 2018
 // https://github.com/WestleyK/rpi-brightness
-// Version-1.0-beta-4
+// Version-1.0-beta-5
 //
 // Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 //
@@ -13,7 +13,7 @@
 #include <ctype.h>
 #include <unistd.h>
 
-
+#define DATE_MODIFIED "Jun 25, 2018"
 #define VERSION "1.0-beta-4"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
@@ -41,10 +41,15 @@ void usage() {
 	printf("	-s | -sleep (enter sleep mode, press <ENTER> to exit)\n");
 	printf("	-c (print current brightness)\n");
 	printf("	[15-255] (adjust brightness from 15 to 255\n");
-	printf("	-v | -version | --version (print version)\n");
+	printf("	-v | -version | --version (print version & date)\n");
 	printf("Source code: https://github.com/WestleyK/rpi-brightness\n");
 	exit(0);
 
+}
+
+void version_display() {
+	printf("%s\n", VERSION);
+	printf("%s\n", DATE_MODIFIED);
 }
 
 void adjust_up() {
@@ -53,7 +58,7 @@ void adjust_up() {
 		printf("Brightness file not writable.\n");
 		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyR/pi-backlight-c (for help)\n");
 		exit(0);
-	}		
+	}
 	int NEW_BRIGHTNESS;
 	FILE *GET_BRIGHTNESS;
 	GET_BRIGHTNESS = fopen(BRIGHTNESS_FILE, "r+");
@@ -76,7 +81,7 @@ void adjust_down() {
 		printf("Brightness file not writable.\n");
 		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyR/pi-backlight-c (for help)\n");
 		exit(0);
-	}		
+	}
 	int NEW_BRIGHTNESS;
 	FILE *GET_BRIGHTNESS;
 	GET_BRIGHTNESS = fopen(BRIGHTNESS_FILE, "r+");
@@ -94,6 +99,12 @@ void adjust_down() {
 }
 
 void sleep_mode() {
+	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
+		printf("\033[31;1m" "ERROR: " "\033[0m");
+		printf("Brightness file not writable.\n");
+		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyR/pi-backlight-c (for help)\n");
+		exit(0);
+	}
 	printf("Press ENTER to exit this mode:\n");
 	sleep(1);
 	FILE *WRITE_ON_OFF;
@@ -150,7 +161,7 @@ int main(int argc, char* argv[]) {
 			return 0;
 		// if -version option
 		} else if ((strcmp(argv[1], "-v") == 0) || (strcmp(argv[1], "-version") == 0) || (strcmp(argv[1], "--version") == 0)) {
-			printf("%s\n", VERSION);
+			version_display();
 			return 0;
 		// or if its a number
 		} else if (isdigit(*argv[1])) {
