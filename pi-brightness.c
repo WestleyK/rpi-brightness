@@ -1,7 +1,7 @@
 // Created by: Westley K
-// Date: Jul 25, 2018
+// Date: Jul 26, 2018
 // https://github.com/WestleyK/rpi-brightness
-// Version-1.0.0
+// Version-1.0.1
 //
 // Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 //
@@ -13,8 +13,8 @@
 #include <ctype.h>
 #include <unistd.h>
 
-#define VERSION "version-1.0.0"
-#define DATE_MODIFIED "Jun 25, 2018"
+#define VERSION "version-1.0.1"
+#define DATE_MODIFIED "Jun 26, 2018"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
 #define BACKLIGHT_POWER "/sys/class/backlight/rpi_backlight/bl_power"
@@ -22,16 +22,12 @@
 #define ADJUST_DOWN 20
 #define BACKLIGHT_ON 0
 #define BACKLIGHT_OFF 1
-#define MAX_BUFF 1000 // for current brightness
 
 int MIN_BRIGHTNESS = 15;
 int MAX_BRIGHTNESS = 255;
 int BRIGHTNESS;
 int ADJUST_BACKLIGHT = 0;
 char BRIGHTNESS_IN[20];
-char CUR_BRIGHT[MAX_BUFF];
-char NEW_BRIGHT[20];
-char UD = 20;
 
 void usage() {
 	printf("Usage: rpi-backlight [OPTION]\n");
@@ -50,6 +46,7 @@ void usage() {
 void version_display() {
 	printf("%s\n", VERSION);
 	printf("%s\n", DATE_MODIFIED);
+	exit(0);
 }
 
 void adjust_up() {
@@ -119,6 +116,8 @@ void sleep_mode() {
 }
 
 void option_c() {
+	int MAX_BUFF = 1000;
+	char CUR_BRIGHT[MAX_BUFF];
 	FILE *BRIGHTNESS_READ;
 	BRIGHTNESS_READ = fopen(BRIGHTNESS_FILE, "r");
 	fgets(CUR_BRIGHT, MAX_BUFF, BRIGHTNESS_READ);
