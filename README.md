@@ -116,7 +116,7 @@ ERROR: Brightness file not writable.
 Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)
 pi@raspberrypi:~ $ 
 ```
-Try `sudo` and then the command, or try [updating](#to-update).
+Try `sudo` and then the command, or try [updating](#to-update:).
 <br>
 
 
