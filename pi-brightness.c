@@ -1,7 +1,7 @@
 // Created by: Westley K
 // Date: Jul 25, 2018
 // https://github.com/WestleyK/rpi-brightness
-// Version-1.0-beta-5
+// Version-1.0.0
 //
 // Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 //
@@ -13,8 +13,8 @@
 #include <ctype.h>
 #include <unistd.h>
 
+#define VERSION "version-1.0.0"
 #define DATE_MODIFIED "Jun 25, 2018"
-#define VERSION "1.0-beta-5"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
 #define BACKLIGHT_POWER "/sys/class/backlight/rpi_backlight/bl_power"
@@ -56,7 +56,7 @@ void adjust_up() {
 	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
 		printf("\033[31;1m" "ERROR: " "\033[0m");
 		printf("Brightness file not writable.\n");
-		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyR/pi-backlight-c (for help)\n");
+		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
 		exit(0);
 	}
 	int NEW_BRIGHTNESS;
@@ -79,7 +79,7 @@ void adjust_down() {
 	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
 		printf("\033[31;1m" "ERROR: " "\033[0m");
 		printf("Brightness file not writable.\n");
-		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyR/pi-backlight-c (for help)\n");
+		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
 		exit(0);
 	}
 	int NEW_BRIGHTNESS;
@@ -102,7 +102,7 @@ void sleep_mode() {
 	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
 		printf("\033[31;1m" "ERROR: " "\033[0m");
 		printf("Brightness file not writable.\n");
-		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyR/pi-backlight-c (for help)\n");
+		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
 		exit(0);
 	}
 	printf("Press ENTER to exit this mode:\n");
@@ -201,7 +201,7 @@ int main(int argc, char* argv[]) {
 			if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
 				printf("\033[31;1m" "ERROR: " "\033[0m");
 				printf("Brightness file not writable.\n");
-				printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyR/pi-backlight-c (for help)\n");
+				printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
 				return EXIT_FAILURE;
 			}
 
@@ -252,7 +252,7 @@ int main(int argc, char* argv[]) {
 	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
 		printf("\033[31;1m" "ERROR: " "\033[0m");
 		printf("Brightness file not writable.\n");
-		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyR/pi-backlight-c (for help)\n");
+		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
 		return EXIT_FAILURE;
 	}
 
