@@ -12,4 +12,5 @@ update:
 	cp -f rpi-brightness /usr/local/bin
 
 uninstall:
-	$(RM) /usr/local/bin/rpi-brightness
+	rm /usr/local/bin/rpi-brightness
+
