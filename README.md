@@ -57,7 +57,6 @@ Usage: rpi-backlight [OPTION]
 	-v | -version | --version (print version & date)
 Source code: https://github.com/WestleyK/rpi-brightness
 pi@raspberrypi:~ $ 
-
 ```
 For example, you can do: <br>
 
@@ -94,7 +93,7 @@ sudo ./no-root.sh
 sudo reboot
 ```
 
-And you should not need the `sudo`. <br>
+Now you should not need the `sudo`. <br>
 <br>
 To undo what you did, type: <br>
 
@@ -116,7 +115,7 @@ ERROR: Brightness file not writable.
 Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)
 pi@raspberrypi:~ $ 
 ```
-Try `sudo` and then the command, or try [updating](#To-update). <br>
+Try `sudo` and then the command, or try [updating](#To-update).
 <br>
 
 
