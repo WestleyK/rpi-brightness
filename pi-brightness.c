@@ -38,7 +38,7 @@
 #include <unistd.h>
 
 
-#define VERSION "version-1.0.2"
+#define VERSION "version-1.0.3"
 #define DATE_MODIFIED "Jun 30, 2018"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
