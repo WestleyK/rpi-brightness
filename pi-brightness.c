@@ -1,8 +1,8 @@
 // Created by: Westley K
 // email: westley@sylabs.io
-// Date: Jul 29, 2018
+// Date: Jul 30, 2018
 // https://github.com/WestleyK/rpi-brightness
-// Version-1.0.1
+// Version-1.0.3
 //
 // Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 //
@@ -37,8 +37,9 @@
 #include <ctype.h>
 #include <unistd.h>
 
-#define VERSION "version-1.0.1"
-#define DATE_MODIFIED "Jun 26, 2018"
+
+#define VERSION "version-1.0.2"
+#define DATE_MODIFIED "Jun 30, 2018"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
 #define BACKLIGHT_POWER "/sys/class/backlight/rpi_backlight/bl_power"
@@ -49,7 +50,6 @@
 
 int MIN_BRIGHTNESS = 15;
 int MAX_BRIGHTNESS = 255;
-int BRIGHTNESS;
 int ADJUST_BACKLIGHT = 0;
 char BRIGHTNESS_IN[20];
 
@@ -73,59 +73,55 @@ void version_display() {
 	exit(0);
 }
 
-void adjust_up() {
+void is_writable() {
 	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
 		printf("\033[31;1m" "ERROR: " "\033[0m");
 		printf("Brightness file not writable.\n");
 		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
-		exit(0);
+		exit(1);
 	}
+}
+
+int current_brightness() {
 	int NEW_BRIGHTNESS;
 	FILE *GET_BRIGHTNESS;
+
 	GET_BRIGHTNESS = fopen(BRIGHTNESS_FILE, "r+");
 	fscanf(GET_BRIGHTNESS, "%d", &NEW_BRIGHTNESS);
-	NEW_BRIGHTNESS += ADJUST_UP;
+	fclose(GET_BRIGHTNESS);
+	return(NEW_BRIGHTNESS);
+}
+
+void set_brightness(int NEW_BRIGHTNESS) {
+	FILE *GET_BRIGHTNESS;
 	if (NEW_BRIGHTNESS >= MAX_BRIGHTNESS) {
 		NEW_BRIGHTNESS = MAX_BRIGHTNESS;
 		printf("Max brightness\n");
+	} else if (NEW_BRIGHTNESS <= MIN_BRIGHTNESS) {
+		NEW_BRIGHTNESS = MIN_BRIGHTNESS;
+		printf("Min brightness\n");
 	}
+	GET_BRIGHTNESS = fopen(BRIGHTNESS_FILE, "w");
 	fprintf(GET_BRIGHTNESS, "%d", NEW_BRIGHTNESS);
 	fclose(GET_BRIGHTNESS);
-	printf("Current brightness:");
-	printf("%d\n", NEW_BRIGHTNESS);
+	printf("Current brightness: %d\n", NEW_BRIGHTNESS);
+	return;
+}
+
+void adjust_up() {
+	is_writable();
+	set_brightness(current_brightness() + ADJUST_UP);
 	exit(0);
 }
 
 void adjust_down() {
-	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
-		printf("\033[31;1m" "ERROR: " "\033[0m");
-		printf("Brightness file not writable.\n");
-		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
-		exit(0);
-	}
-	int NEW_BRIGHTNESS;
-	FILE *GET_BRIGHTNESS;
-	GET_BRIGHTNESS = fopen(BRIGHTNESS_FILE, "r+");
-	fscanf(GET_BRIGHTNESS, "%d", &NEW_BRIGHTNESS);
-	NEW_BRIGHTNESS -= ADJUST_UP;
-	if (NEW_BRIGHTNESS <= MIN_BRIGHTNESS) {
-		NEW_BRIGHTNESS = MIN_BRIGHTNESS;
-		printf("Min brightness\n");
-	}
-	fprintf(GET_BRIGHTNESS, "%d", NEW_BRIGHTNESS);
-	fclose(GET_BRIGHTNESS);
-	printf("Current brightness:");
-	printf("%d\n", NEW_BRIGHTNESS);
+	is_writable();
+	set_brightness(current_brightness() - ADJUST_DOWN);
 	exit(0);
 }
 
 void sleep_mode() {
-	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
-		printf("\033[31;1m" "ERROR: " "\033[0m");
-		printf("Brightness file not writable.\n");
-		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
-		exit(0);
-	}
+	is_writable();
 	printf("Press ENTER to exit this mode:\n");
 	sleep(1);
 	FILE *WRITE_ON_OFF;
@@ -151,12 +147,42 @@ void option_c() {
 	exit(0);
 }
 
-int main(int argc, char* argv[]) {
+void adjust_brightness(char* argv) {
+	int i;
+	// check if input contains any letter
+	for (i = 0; i < strlen(argv) - 1; i++) {
+		if (argv[i] >= '0' && argv[i] <= '9') {
+			//printf("%c\n", IS_VALID[i]);
+		} else {
+			printf("Character is not a digit: '%c'\n", argv[i]);
+			exit(1);;
+		}
+	}
+	// convert string to int
+	int BRIGHTNESS = atoi(argv);
+
+	// check if its within range
+	if ((BRIGHTNESS < MIN_BRIGHTNESS) || (BRIGHTNESS > MAX_BRIGHTNESS)) {
+		printf("Value is out of range: %d\n", BRIGHTNESS);
+		exit(1);
+	}
+	// check if file is writable
+	is_writable();
+	// write to brightness file
+	FILE *BACKLIGHT_FILE;
+	BACKLIGHT_FILE = fopen(BRIGHTNESS_FILE, "w");
+	fprintf(BACKLIGHT_FILE, "%d", BRIGHTNESS);
+	fclose(BACKLIGHT_FILE);
+    	exit(0);
+}
+
+
+int main(int argc, char** argv) {
 
 	// check if more than one argument
 	if (argc > 2) {
 		printf("Only one argument! :P\n");
-		exit(0);
+		exit(1);
 	}
 
 	// if theres one, than what is it
@@ -188,104 +214,18 @@ int main(int argc, char* argv[]) {
 			return 0;
 		// or if its a number
 		} else if (isdigit(*argv[1])) {
-			ADJUST_BACKLIGHT = 1;
+			adjust_brightness(argv[1]);
 		} else {
 			printf("Option not found :P\n");
 			printf("Try: rpi-brightness -help\n");
 			return EXIT_FAILURE;
 		}
-
-		// do we need to adjust
-		if (ADJUST_BACKLIGHT == 1) {
-			// check if theres a decimal, this part is not needed
-			if (strstr(argv[1], ".") != 0) {
-				printf("Only whole numbers!\n");
-				return EXIT_FAILURE;
-			}
-			// check if input contains any letter
-			char *IS_VALID = argv[1];
-			int i;
-			for (i = 0; i < strlen(IS_VALID); i++) {
-				if (IS_VALID[i] >= '0' && IS_VALID[i] <= '9') {
-					//printf("%c\n", IS_VALID[i]);
-				} else {
-					printf("Only number input!\n");
-					return EXIT_FAILURE;
-				}
-			}
-			// convert string to int
-			BRIGHTNESS = atoi(argv[1]);
-			// check if its within range
-			if ((BRIGHTNESS < MIN_BRIGHTNESS) || (BRIGHTNESS > MAX_BRIGHTNESS)) {
-				printf("Not valid number\n");
-				return EXIT_FAILURE;
-			}
-			// check if file is writable
-			if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
-				printf("\033[31;1m" "ERROR: " "\033[0m");
-				printf("Brightness file not writable.\n");
-				printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
-				return EXIT_FAILURE;
-			}
-
-			// write to brightness file
-			FILE *BACKLIGHT_FILE;
-			BACKLIGHT_FILE = fopen(BRIGHTNESS_FILE, "w");
-			fprintf(BACKLIGHT_FILE, "%d", BRIGHTNESS);
-			fclose(BACKLIGHT_FILE);
-
-    			return EXIT_SUCCESS;
-		}
+    		return 0;
 	}
-
-
 	// if no arguments, than offer to change brightness
 	printf("[15-255]:");
 	fgets(BRIGHTNESS_IN, 20, stdin);
-	// check if theres a decimal
-	if (strstr(BRIGHTNESS_IN, ".") != 0 ) {
-		printf("Only whole numbers!\n");
-		return EXIT_FAILURE;
-	}
-	// check if theres a comma
-	if (strstr(BRIGHTNESS_IN, ",") != 0) {
-		printf("Only whole numbers!\n");
-		return EXIT_FAILURE;
-	}
-	// check if input contains any letter
-	char *IS_VALID = BRIGHTNESS_IN;
-	int i;
-	for (i = 0; i < (strlen(IS_VALID) -1 ); i++) {
-		if (IS_VALID[i] >= '0' && IS_VALID[i] <= '9') {
-			//printf("%c\n", IS_VALID[i]);
-		} else {
-			printf("Only number input!\n");
-			return EXIT_FAILURE;
-		}
-	}
-	// again, convert string to int
-	BRIGHTNESS = atoi(BRIGHTNESS_IN);
-	// check is its within range
-	if ((BRIGHTNESS < MIN_BRIGHTNESS) || (BRIGHTNESS > MAX_BRIGHTNESS)) {
-		printf("Not a valid number!\n");
-		return EXIT_FAILURE;
-	}
-
-	// check if file is writable
-	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
-		printf("\033[31;1m" "ERROR: " "\033[0m");
-		printf("Brightness file not writable.\n");
-		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
-		return EXIT_FAILURE;
-	}
-
-	// write to file
-	FILE *BACKLIGHT_FILE;
-	BACKLIGHT_FILE = fopen(BRIGHTNESS_FILE, "w");
-	fprintf(BACKLIGHT_FILE, "%d", BRIGHTNESS);
-	fclose(BACKLIGHT_FILE);
-
-
+	adjust_brightness(BRIGHTNESS_IN);
 	return 0;
 }
 
