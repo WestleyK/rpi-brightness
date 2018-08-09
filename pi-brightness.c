@@ -1,8 +1,8 @@
 // Created by: Westley K
 // email: westley@sylabs.io
-// Date: Jul 30, 2018
+// Date: Aug 8, 2018
 // https://github.com/WestleyK/rpi-brightness
-// Version-1.0.3
+// Version-1.0.4
 //
 // Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 //
@@ -38,8 +38,8 @@
 #include <unistd.h>
 
 
-#define VERSION "version-1.0.3"
-#define DATE_MODIFIED "Jun 30, 2018"
+#define VERSION "version-1.0.4"
+#define DATE_MODIFIED "Aug 8, 2018"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
 #define BACKLIGHT_POWER "/sys/class/backlight/rpi_backlight/bl_power"
@@ -47,17 +47,15 @@
 #define ADJUST_DOWN 20
 #define BACKLIGHT_ON 0
 #define BACKLIGHT_OFF 1
+#define MIN_BRIGHTNESS 15 
+#define MAX_BRIGHTNESS 255
 
-int MIN_BRIGHTNESS = 15;
-int MAX_BRIGHTNESS = 255;
-int ADJUST_BACKLIGHT = 0;
-char BRIGHTNESS_IN[20];
 
 void usage() {
 	printf("Usage: rpi-backlight [OPTION]\n");
 	printf("	-h | -help | --help (print help menu)\n");
-	printf("	-u | -up (adjust backlight brighter by 20/255\n");
-	printf("	-d | -down (adjust brightness lower by 20/255\n");
+	printf("	-u | -up (adjust backlight brighter by: %i/255\n", ADJUST_UP);
+	printf("	-d | -down (adjust brightness lower by: %i/255\n", ADJUST_DOWN);
 	printf("	-s | -sleep (enter sleep mode, press <ENTER> to exit)\n");
 	printf("	-c (print current brightness)\n");
 	printf("	[15-255] (adjust brightness from 15 to 255\n");
@@ -122,7 +120,8 @@ void adjust_down() {
 
 void sleep_mode() {
 	is_writable();
-	printf("Press ENTER to exit this mode:\n");
+	char BRIGHTNESS_IN[20];
+	printf("Press <ENTER> to exit this mode:\n");
 	sleep(1);
 	FILE *WRITE_ON_OFF;
 	WRITE_ON_OFF = fopen(BACKLIGHT_POWER, "w");
@@ -216,13 +215,14 @@ int main(int argc, char** argv) {
 		} else if (isdigit(*argv[1])) {
 			adjust_brightness(argv[1]);
 		} else {
-			printf("Option not found :P\n");
+			printf("Option not found :P  %s\n", argv[1]);
 			printf("Try: rpi-brightness -help\n");
 			return EXIT_FAILURE;
 		}
     		return 0;
 	}
 	// if no arguments, than offer to change brightness
+	char BRIGHTNESS_IN[20];
 	printf("[15-255]:");
 	fgets(BRIGHTNESS_IN, 20, stdin);
 	adjust_brightness(BRIGHTNESS_IN);
