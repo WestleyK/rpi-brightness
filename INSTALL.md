@@ -2,6 +2,9 @@
 
 
 ```
+cd ~/
+mkdir raspberrypi-backlight
+cd raspberrypi-backlight/
 git clone https://github.com/WestleyK/rpi-brightness.git
 cd rpi-brightness/
 make
@@ -15,7 +18,7 @@ sudo make install
 
 
 ```
-cd rpi-brightness/
+cd ~/raspberrypi-backlight/rpi-brightness/
 sudo make update
 ```
 **Note:** This will install after updating. <br>
@@ -26,7 +29,7 @@ sudo make update
 ## Uninstalling:
 
 ```
-cd rpi-brightness
+cd ~/raspberrypi-backlight/rpi-brightness/
 sudo make uninstall
 ```
 
@@ -38,7 +41,7 @@ sudo make uninstall
 If you run this, you dont need the `sudo` before changing the brightness. <br>
 
 ```
-cd rpi-backlight
+cd ~/raspberrypi-backlight/rpi-brightness/
 sudo ./no-root.sh
 sudo reboot
 ```
