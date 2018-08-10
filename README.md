@@ -11,6 +11,9 @@ If you prefer a perl script, check out my other repo: https://github.com/Westley
 #### To install: <br>
 
 ```
+cd ~/
+mkdir raspberrypi-backlight
+cd raspberrypi-backlight/
 git clone https://github.com/WestleyK/rpi-brightness.git
 cd rpi-brightness/
 make
@@ -23,7 +26,7 @@ sudo make install
 #### To update: <br>
 
 ```
-cd rpi-brightness/
+cd ~/raspberrypi-backlight/rpi-brightness/
 sudo make update
 ```
 
@@ -35,7 +38,7 @@ Update will re-install after updating. <br>
 
 
 ```
-cd rpi-brightness/
+cd ~/raspberrypi-backlight/rpi-brightness/
 sudo make uninstall
 ```
 
@@ -49,11 +52,11 @@ sudo make uninstall
 pi@raspberrypi:~ $ rpi-brightness -help
 Usage: rpi-backlight [OPTION]
 	-h | -help | --help (print help menu)
-	-u | -up (adjust backlight brighter by 20/255
-	-d | -down (adjust brightness lower by 20/255
+	-u | -up (adjust backlight brighter by: 20/255
+	-d | -down (adjust brightness lower by: 20/255
 	-s | -sleep (enter sleep mode, press <ENTER> to exit)
 	-c (print current brightness)
-	[15-255] (adjust brightness from 15 to 255
+ 	[15-255] (adjust brightness from: 15 to: 255)
 	-v | -version | --version (print version & date)
 Source code: https://github.com/WestleyK/rpi-brightness
 pi@raspberrypi:~ $ 
@@ -115,7 +118,10 @@ ERROR: Brightness file not writable.
 Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)
 pi@raspberrypi:~ $ 
 ```
-Try `sudo` and then the command, or try [updating](#To-update).
+Possible causes or fixes: <br>
+- Try `sudo` and then the command. <br>
+- Try [updating](#To-update). <br>
+- File does't exist. <br>
 <br>
 
 
