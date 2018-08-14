@@ -1,8 +1,8 @@
 // Created by: Westley K
 // email: westley@sylabs.io
-// Date: Aug 10, 2018
+// Date: Aug 14, 2018
 // https://github.com/WestleyK/rpi-brightness
-// Version-1.0.6
+// Version-1.0.7
 //
 // Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 //
@@ -38,8 +38,8 @@
 #include <unistd.h>
 
 
-#define VERSION "version-1.0.6"
-#define DATE_MODIFIED "Aug 10, 2018"
+#define VERSION "version-1.0.7"
+#define DATE_MODIFIED "Aug 14, 2018"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
 #define BACKLIGHT_POWER "/sys/class/backlight/rpi_backlight/bl_power"
