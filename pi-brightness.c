@@ -73,7 +73,7 @@ void version_display() {
 
 void is_writable() {
 	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
-		printf("\033[31;1m" "ERROR: " "\033[0m");
+		printf("\033[0;31m" "ERROR: " "\033[0m");
 		printf("Brightness file not writable.\n");
 		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
 		exit(1);
