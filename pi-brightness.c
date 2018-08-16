@@ -1,8 +1,8 @@
 // Created by: Westley K
 // email: westley@sylabs.io
-// Date: Aug 14, 2018
+// Date: Aug 15, 2018
 // https://github.com/WestleyK/rpi-brightness
-// Version-1.0.7
+// Version-1.0.8
 //
 // Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 //
@@ -38,8 +38,8 @@
 #include <unistd.h>
 
 
-#define VERSION "version-1.0.7"
-#define DATE_MODIFIED "Aug 14, 2018"
+#define VERSION "version-1.0.8"
+#define DATE_MODIFIED "Aug 15, 2018"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
 #define BACKLIGHT_POWER "/sys/class/backlight/rpi_backlight/bl_power"
@@ -54,8 +54,8 @@
 void usage() {
 	printf("Usage: rpi-backlight [OPTION]\n");
 	printf("	-h | -help | --help (print help menu)\n");
-	printf("	-u | -up (adjust backlight brighter by: %i/%i\n", ADJUST_UP, MAX_BRIGHTNESS);
-	printf("	-d | -down (adjust brightness lower by: %i/%i\n", ADJUST_DOWN, MAX_BRIGHTNESS);
+	printf("	-u | -up (adjust backlight brighter by: %i/%i)\n", ADJUST_UP, MAX_BRIGHTNESS);
+	printf("	-d | -down (adjust brightness lower by: %i/%i)\n", ADJUST_DOWN, MAX_BRIGHTNESS);
 	printf("	-s | -sleep (enter sleep mode, press <ENTER> to exit)\n");
 	printf("	-c (print current brightness)\n");
 	printf(" 	[%i-%i] (adjust brightness from: %i to: %i)\n", MIN_BRIGHTNESS, MAX_BRIGHTNESS, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
