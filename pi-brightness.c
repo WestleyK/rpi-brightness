@@ -1,8 +1,8 @@
 // Created by: Westley K
 // email: westley@sylabs.io
-// Date: Aug 15, 2018
+// Date: Aug 16, 2018
 // https://github.com/WestleyK/rpi-brightness
-// Version-1.0.8
+// Version-1.0.9
 //
 // Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 //
@@ -38,8 +38,8 @@
 #include <unistd.h>
 
 
-#define VERSION "version-1.0.8"
-#define DATE_MODIFIED "Aug 15, 2018"
+#define VERSION "version-1.0.9"
+#define DATE_MODIFIED "Aug 16, 2018"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
 #define BACKLIGHT_POWER "/sys/class/backlight/rpi_backlight/bl_power"
@@ -73,7 +73,7 @@ void version_display() {
 
 void is_writable() {
 	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
-		printf("\033[0;31m" "ERROR: " "\033[0m");
+		printf("\033[0;31mERROR: \033[0m");
 		printf("Brightness file not writable.\n");
 		printf("Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
 		exit(1);
@@ -135,7 +135,7 @@ void sleep_mode() {
 }
 
 void option_c() {
-    is_writable();
+	is_writable();
 	int MAX_BUFF = 1000;
 	char CUR_BRIGHT[MAX_BUFF];
 	FILE *BRIGHTNESS_READ;
@@ -177,7 +177,7 @@ void adjust_brightness(char* argv) {
 }
 
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
 
 	// check if more than one argument
 	if (argc > 2) {
