@@ -2,7 +2,7 @@
 # email: westley@sylabs.io
 # Date: Aug 17, 2018
 # https://github.com/WestleyK/rpi-brightness
-# Version-1.0.2
+# Version-1.0.3
 #
 # Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 #
@@ -40,9 +40,6 @@ install:
 
 update:
 	git pull origin master
-	gcc -g -o rpi-brightness pi-brightness.c
-	chmod +x rpi-brightness
-	cp -f rpi-brightness /usr/local/bin
 
 uninstall:
 	rm /usr/local/bin/rpi-brightness
