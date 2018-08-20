@@ -51,13 +51,14 @@ sudo make uninstall
 ```
 pi@raspberrypi:~ $ rpi-brightness -help
 Usage: rpi-backlight [OPTION]
-	-h | -help | --help (print help menu)
-	-u | -up (adjust backlight brighter by: 20/255
-	-d | -down (adjust brightness lower by: 20/255
-	-s | -sleep (enter sleep mode, press <ENTER> to exit)
-	-c (print current brightness)
- 	[15-255] (adjust brightness from: 15 to: 255)
-	-v | -version | --version (print version & date)
+        -h | -help | --help (print help menu)
+        -u | -up (adjust backlight brighter by: 20/255)
+        -d | -down (adjust brightness lower by: 20/255)
+        -s | -sleep (enter sleep mode, press <ENTER> to exit)
+        -c (print current brightness)
+        [15-255] (adjust brightness from: 15 to: 255)
+        -i | -info (print compiled info)
+        -v | -version | --version (print version & date)
 Source code: https://github.com/WestleyK/rpi-brightness
 pi@raspberrypi:~ $ 
 ```
@@ -78,9 +79,10 @@ Make sure you type `sudo` before adjusting backlight, <br>
 Or you might get this `ERROR` <br>
 
 ```
-pi@raspberrypi:~ $ rpi-brightness 200
-ERROR: Brightness file not writable.
-Try: sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)
+pi@raspberrypi:~ $ rpi-brightness -up
+ERROR: Brightness file not writable or doesn't exist:
+/sys/class/backlight/rpi_backlight/brightness
+Try: $ sudo rpi-brightness [OPTION]  (or)  https://github.com/WestleyK/rpi-brightness (for help)
 pi@raspberrypi:~ $ 
 ```
 
