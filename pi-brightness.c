@@ -1,8 +1,8 @@
 // Created by: Westley K
 // email: westley@sylabs.io
-// Date: Aug 17, 2018
+// Date: Aug 20, 2018
 // https://github.com/WestleyK/rpi-brightness
-// Version-1.1.2
+// Version-1.1.5
 //
 // Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 //
@@ -38,11 +38,12 @@
 #include <unistd.h>
 
 
-#define VERSION "version-1.1.2"
-#define DATE_MODIFIED "Aug 17, 2018"
+#define VERSION "version-1.1.5"
+#define DATE_MODIFIED "Aug 20, 2018"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
 #define BACKLIGHT_POWER "/sys/class/backlight/rpi_backlight/bl_power"
+#define INFO_FILE "/usr/local/share/rpi_brightness_info.txt"
 #define ADJUST_UP 20
 #define ADJUST_DOWN 20
 #define BACKLIGHT_ON 0
@@ -59,6 +60,7 @@ void usage() {
 	printf("        -s | -sleep (enter sleep mode, press <ENTER> to exit)\n");
 	printf("        -c (print current brightness)\n");
 	printf("        [%i-%i] (adjust brightness from: %i to: %i)\n", MIN_BRIGHTNESS, MAX_BRIGHTNESS, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
+    printf("        -i | -info (print compiled info)\n");
 	printf("        -v | -version | --version (print version & date)\n");
 	printf("Source code: https://github.com/WestleyK/rpi-brightness\n");
 	exit(0);
@@ -72,13 +74,34 @@ void version_display() {
 	exit(0);
 }
 
+// print info file
+void info_print() {
+    if (access(INFO_FILE, F_OK) != 0 ) {
+		printf("\033[0;31mERROR: \033[0m");
+		printf("File not readable or doesn't exist:\n");
+        printf("%s\n", INFO_FILE);
+        printf("Failed to print info.\n");
+		exit(1);
+	}
+    FILE *info_text;
+    char cont;
+    info_text = fopen(INFO_FILE, "r");
+    cont = fgetc(info_text);
+    while (cont != EOF) {
+        printf ("%c", cont);
+        cont = fgetc(info_text);
+    }
+    fclose(info_text);
+    exit(0);
+}
+
 // check if BRIGHTNESS_FILE is writable
 void is_writable() {
 	if (access(BRIGHTNESS_FILE, W_OK) != 0 ) {
 		printf("\033[0;31mERROR: \033[0m");
 		printf("Brightness file not writable or doesn't exist:\n");
         printf("%s\n", BRIGHTNESS_FILE);
-		printf("Try: $ sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
+		printf("Try: $ sudo rpi-brightness [OPTION]  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
 		exit(1);
 	}
 }
@@ -89,7 +112,7 @@ void power_there() {
 		printf("\033[0;31mERROR: \033[0m");
 		printf("File not readable or doesn't exist:\n");
         printf("%s\n", BACKLIGHT_POWER);
-		printf("Try: $ sudo rpi-brightness  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
+		printf("Try: $ sudo rpi-brightness [OPTION]  (or)  https://github.com/WestleyK/rpi-brightness (for help)\n");
 		exit(1);
 	}
 
@@ -231,6 +254,9 @@ int main(int argc, char* argv[]) {
 			option_c();
 			return 0;
 		// if -version option
+        } else if ((strcmp(argv[1], "-i") == 0) || (strcmp(argv[1], "-info") == 0)) {
+            info_print();
+            return 0;
 		} else if ((strcmp(argv[1], "-v") == 0) || (strcmp(argv[1], "-version") == 0) || (strcmp(argv[1], "--version") == 0)) {
 			version_display();
 			return 0;
@@ -244,11 +270,13 @@ int main(int argc, char* argv[]) {
 		}
     		return 0;
 	}
+
+    option_c();
 	// if no arguments, than offer to change brightness
-	char BRIGHTNESS_IN[20];
-	printf("[%i-%i]:", MIN_BRIGHTNESS, MAX_BRIGHTNESS);
-	fgets(BRIGHTNESS_IN, 20, stdin);
-	adjust_brightness(BRIGHTNESS_IN);
+//	char BRIGHTNESS_IN[20];
+//	printf("[%i-%i]:", MIN_BRIGHTNESS, MAX_BRIGHTNESS);
+//	fgets(BRIGHTNESS_IN, 20, stdin);
+//	adjust_brightness(BRIGHTNESS_IN);
 	return 0;
 }
 
