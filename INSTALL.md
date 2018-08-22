@@ -21,7 +21,6 @@ sudo make install
 cd ~/raspberrypi-backlight/rpi-brightness/
 sudo make update
 ```
-**Note:** This will install after updating. <br>
 
 <br>
 <br>
