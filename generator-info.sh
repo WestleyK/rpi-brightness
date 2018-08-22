@@ -2,9 +2,9 @@
 #
 # Created by: Westley K
 # email: westley@sylabs.io
-# Date: Aug 20, 2018
+# Date: Aug 21, 2018
 # https://github.com/WestleyK/rpi-brightness
-# Version-1.0.1
+# Version-1.0.2
 #
 # Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 #
@@ -34,7 +34,7 @@
 
 
 
-FILE_INFO="rpi_brightness_info.txt"
+FILE_INFO="rpi_brightness_info.c"
 
 DATE=` date `
 WHO=` whoami `
@@ -44,10 +44,26 @@ WHERE=` pwd `
 touch $FILE_INFO
 cat /dev/null > $FILE_INFO
 
-echo "Compiled date: $DATE" >> $FILE_INFO
-echo "Compiled by: $WHO" >> $FILE_INFO
-echo "Compiled on: $ON" >> $FILE_INFO
-echo "Compiled in: $WHERE" >> $FILE_INFO
+
+echo "#include<stdio.h>" >> $FILE_INFO
+echo "" >> $FILE_INFO
+echo "void info() {" >> $FILE_INFO
+echo "    printf(\"Compiled date: $DATE\\\\n\");" >> $FILE_INFO
+echo "    printf(\"Compiled by: $WHO\\\\n\");" >> $FILE_INFO
+echo "    printf(\"Compiled on: $ON\\\\n\");" >> $FILE_INFO
+echo "    printf(\"Compiled in: $WHERE\\\\n\");" >> $FILE_INFO
+echo "    return;" >> $FILE_INFO
+echo "}" >> $FILE_INFO
+
+
+
+#touch $FILE_INFO
+#cat /dev/null > $FILE_INFO
+
+#echo "Compiled date: $DATE" >> $FILE_INFO
+#echo "Compiled by: $WHO" >> $FILE_INFO
+#echo "Compiled on: $ON" >> $FILE_INFO
+#echo "Compiled in: $WHERE" >> $FILE_INFO
 
 
 
