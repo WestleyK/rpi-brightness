@@ -1,8 +1,8 @@
 # Created by: Westley K
 # email: westley@sylabs.io
-# Date: Aug 21, 2018
+# Date: Aug 22, 2018
 # https://github.com/WestleyK/rpi-brightness
-# Version-1.0.9
+# Version-1.1.0
 #
 # Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 #
@@ -31,20 +31,33 @@
 #
 
 
-all: pi-brightness.c
-	./generator-info.sh
-	gcc pi-brightness.c rpi_brightness_info.c -o rpi-brightness
-	rm -f rpi_brightness_info.c
+CODE_NAME = pi-brightness.c
+INFO_NAME = rpi_brightness_info.c
+INFO_GEN = generator-info.sh
+SCRIPT_NAME = rpi-brightness
+INSTALL_TO = /usr/local/bin/
+
+
+all: $(CODE_NAME)
+	@./$(INFO_GEN)
+	@echo "Compileing code..."
+	@gcc $(CODE_NAME) $(INFO_NAME) -o $(SCRIPT_NAME)
+	@rm -f $(INFO_NAME)
+	@echo "Done."
+	@echo "=> Do:"
+	@echo "  $$ sudo make install"
 
 install:
-	chmod +x rpi-brightness
-	cp rpi-brightness /usr/local/bin
+	chmod +x $(SCRIPT_NAME)
+	cp -f $(SCRIPT_NAME) $(INSTALL_TO)
+
 update:
+	rm -f $(SCRIPT_NAME)
 	git pull origin master
 
 uninstall:
-	rm /usr/local/bin/rpi-brightness
-	rm /usr/local/share/rpi_brightness_info.txt
+	rm $(INSTALL_TO)$(SCRIPT_NAME)
+
 
 
 #
