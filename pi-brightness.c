@@ -2,7 +2,7 @@
 // email: westley@sylabs.io
 // Date: Aug 21, 2018
 // https://github.com/WestleyK/rpi-brightness
-// Version-1.1.8
+// Version-1.1.9
 //
 // Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 //
@@ -37,7 +37,7 @@
 #include <ctype.h>
 #include <unistd.h>
 
-#define VERSION "version-1.1.8"
+#define VERSION "version-1.1.9"
 #define DATE_MODIFIED "Aug 21, 2018"
 
 #define BRIGHTNESS_FILE "/sys/class/backlight/rpi_backlight/brightness"
@@ -75,29 +75,8 @@ void version_display() {
 
 // print info file
 void info_print() {
-
     int info();
     info();
-
-    //printf("%s\n", hello);
-
-
-
-//    if (access(INFO_FILE, F_OK) != 0 ) {
-//		printf("\033[0;31mERROR: \033[0m");
-//		printf("File not readable or doesn't exist:\n");
-//        printf("%s\n", INFO_FILE);
-//        printf("Failed to print info.\n");
-//		exit(1);
-//	}
-//    FILE *file;
-//    int c;
-//    file = fopen(INFO_FILE, "r");
-//    if (file) {
-//        while ((c = getc(file)) != EOF)
-//        putchar(c);
-//        fclose(file);
-//    }
     exit(0);
 }
 
