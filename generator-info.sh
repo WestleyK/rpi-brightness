@@ -4,7 +4,7 @@
 # email: westley@sylabs.io
 # Date: Aug 22, 2018
 # https://github.com/WestleyK/rpi-brightness
-# Version-1.0.3
+# Version-1.0.4
 #
 # Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 #
@@ -44,16 +44,19 @@ WHERE=` pwd `
 touch $FILE_INFO
 cat /dev/null > $FILE_INFO
 
-echo '#include<stdio.h>' >> $FILE_INFO
-echo '' >> $FILE_INFO
-echo 'void info() {' >> $FILE_INFO
-echo '    printf("Compiled date: $DATE\\n");' >> $FILE_INFO
-echo '    printf("Compiled by: $WHO\\n");' >> $FILE_INFO
-echo '    printf("Compiled on: $ON\\n");' >> $FILE_INFO
-echo '    printf("Compiled in: $WHERE\\n");' >> $FILE_INFO
-echo '    return;' >> $FILE_INFO
-echo '}' >> $FILE_INFO
+cat << END_OF_FILE > $FILE_INFO
 
+#include <stdio.h>
+
+void info() {
+    printf("Compiled date: $DATE\n");
+    printf("Compiled by: $WHO\n");
+    printf("Compiled on: $ON\n");
+    printf("Compiled in: $WHERE\n");
+    return;
+}
+
+END_OF_FILE
 
 
 
