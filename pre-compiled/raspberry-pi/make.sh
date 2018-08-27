@@ -2,7 +2,7 @@
 # Created by: Westley K
 # email: westley@sylabs.io
 # Date: Aug 26, 2018
-# version-1.0.0
+# version-1.0.1
 # https://github.com/WestleyK/rpi-brightness
 #
 # MIT License
@@ -150,6 +150,8 @@ if [ ! -z $OPTION ]; then
 		update_script
 	elif [ "$OPTION" = "uninstall" ]; then
 		uninstall_script
+	elif [ "$OPTION" = "info" ]; then
+		info
 	elif [ "$OPTION" = "version" ]; then
 		script_version
 	else
