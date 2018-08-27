@@ -1,8 +1,8 @@
 # Created by: Westley K
 # email: westley@sylabs.io
-# Date: Aug 22, 2018
+# Date: Aug 26, 2018
 # https://github.com/WestleyK/rpi-brightness
-# Version-1.1.0
+# Version-1.1.1
 #
 # Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 #
@@ -44,7 +44,7 @@ all: $(CODE_NAME)
 	@gcc $(CODE_NAME) $(INFO_NAME) -o $(SCRIPT_NAME)
 	@rm -f $(INFO_NAME)
 	@echo "Done."
-	@echo "=> Do:"
+	@echo ">> Do:"
 	@echo "  $$ sudo make install"
 
 install:
