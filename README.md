@@ -2,13 +2,19 @@
 
 Designed and tested for raspberry pi with official 7 inch touchdcreen. <br>
 <br>
-If you prefer a perl script, check out my other repo: https://github.com/WestleyK/pi-backlight <br>
+
+Other script that do the same thing:
+ - go: https://github.com/WestleyK/rpi-backlight
+ - perl: https://github.com/WestleyK/pi-backlight
+ - bash/shell: https://github.com/WestleyK/backlight
+ 
+<br>
 <br>
 
 ## Install, Update and Uninstall
 
 
-#### To install: <br>
+### To install: <br>
 
 ```
 cd ~/
@@ -21,9 +27,24 @@ sudo make install
 ```
 
 <br>
+
+### Easy install:
+
+Paste or type this in your terminal:
+```
+curl https://raw.githubusercontent.com/WestleyK/rpi-backlight/master/one-line-install.sh | sh
+```
+This will install `rpi-brightness` to the current directory.
+
+To finish the install, do:
+```
+sudo mv rpi-brightness /usr/local/bin/
+```
+
+<br>
 <br>
 
-#### To update: <br>
+### To update: <br>
 
 ```
 cd ~/raspberrypi-backlight/rpi-brightness/
@@ -33,7 +54,7 @@ sudo make install
 <br>
 <br>
 
-#### To uninstall: <br>
+### To uninstall: <br>
 
 
 ```
