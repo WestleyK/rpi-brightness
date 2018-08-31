@@ -10,7 +10,7 @@
 
 set -e
 
-SCRIPT_URL=""
+SCRIPT_URL="https://github.com/WestleyK/rpi-brightness/raw/master/pre-compiled/raspberry-pi/rpi-brightness"
 SCRIPT_NAME="rpi-brightness"
 INSTALL_PATH="/usr/local/bin/"
 ARCH_VERSION="armv7l"
