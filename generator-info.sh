@@ -1,10 +1,9 @@
 #!/bin/sh
-#
 # Created by: Westley K
 # email: westley@sylabs.io
-# Date: Aug 22, 2018
+# Date: Aug 31, 2018
 # https://github.com/WestleyK/rpi-brightness
-# Version-1.0.4
+# Version-1.0.5
 #
 # Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 #
@@ -32,14 +31,14 @@
 # SOFTWARE.
 #
 
-
-
 FILE_INFO="rpi_brightness_info.c"
 
 DATE=` date `
 WHO=` whoami `
 ON=` hostname `
 WHERE=` pwd `
+KERN=` uname -r `
+ARCH=` uname -m `
 
 touch $FILE_INFO
 cat /dev/null > $FILE_INFO
@@ -53,6 +52,8 @@ void info() {
     printf("Compiled by: $WHO\n");
     printf("Compiled on: $ON\n");
     printf("Compiled in: $WHERE\n");
+    printf("Compiled on kernel: $KERN\n");
+    printf("Compiled on architecture: $ARCH\n");
     return;
 }
 
