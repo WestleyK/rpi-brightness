@@ -1,6 +1,6 @@
 ## A simple command for adjusting your raspberry pi backlight
 
-Designed and tested for raspberry pi with official 7 inch touchdcreen. <br>
+Designed and tested for raspberry pi with official 7 inch touchscreen. <br>
 <br>
 
 Other script that do the same thing:
