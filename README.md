@@ -3,15 +3,15 @@
 Designed and tested for raspberry pi with official 7 inch touchscreen. <br>
 <br>
 
-Other script that do the same thing:
- - go: https://github.com/WestleyK/rpi-backlight
- - perl: https://github.com/WestleyK/pi-backlight
- - bash/shell: https://github.com/WestleyK/backlight
+Other scripts that do the same thing:
+ - Go: https://github.com/WestleyK/rpi-backlight
+ - Perl: https://github.com/WestleyK/pi-backlight
+ - Bash/Shell: https://github.com/WestleyK/backlight
  
 <br>
 <br>
 
-## Install, Update and Uninstall
+## Install, Update, and Uninstall
 
 
 ### To install: <br>
@@ -30,7 +30,7 @@ sudo make install
 
 ### Easy install:
 
-Paste or type this in your terminal:
+Copy-paste or type this in your terminal:
 ```
 curl https://raw.githubusercontent.com/WestleyK/rpi-backlight/master/easy-install.sh | sh
 ```
