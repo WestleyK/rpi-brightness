@@ -1,9 +1,9 @@
 #!/bin/sh
 # Created by: Westley K
 # email: westley@sylabs.io
-# Date: Aug 31, 2018
+# Date: Oct 17, 2018
 # https://github.com/WestleyK/rpi-brightness
-# Version-1.0.5
+# Version-1.0.6
 #
 # Designed and tested for raspberry pi with official 7 inch touchdcreen. 
 #
@@ -33,7 +33,7 @@
 
 FILE_INFO="rpi_brightness_info.c"
 
-DATE=` date `
+DATE=` date "+%B %d, %Y, %I:%M:%S %p" `
 WHO=` whoami `
 ON=` hostname `
 WHERE=` pwd `
